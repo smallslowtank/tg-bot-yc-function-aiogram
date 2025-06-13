@@ -2,7 +2,27 @@
 
 Зачем? Потомучто! )))
 
-####Документация
+Файл с баннером для загрузки в хранилище
+
+https://github.com/smallslowtank/tg-bot-yc-function-aiogram/blob/master/IMG.jpg
+
+Файл с zip-ахривом кода телеграм-бота для загрузки в функцию
+
+https://github.com/smallslowtank/tg-bot-yc-function-aiogram/blob/master/tg-bot.zip
+
+Файл с текстом запросов в базу данных для создания таблицы и наполнения её информацией
+
+https://github.com/smallslowtank/tg-bot-yc-function-aiogram/blob/master/create-db.sql
+
+Файл с названиями переменных для функии
+
+https://github.com/smallslowtank/tg-bot-yc-function-aiogram/blob/master/env.example
+
+Файл с текста команды для подключения webhook
+
+https://github.com/smallslowtank/tg-bot-yc-function-aiogram/blob/master/set-webhook.txt 
+
+#### Документация
 
 Telegram API
 
@@ -58,16 +78,24 @@ https://yandex.cloud/ru/docs/functions/
 
 https://yandex.cloud/ru/docs/functions/concepts/trigger/
 
+Обучение и сертификация
+
+https://yandex.cloud/ru/training
+
+
 #### Репозитории
 
 GitHub
 
+https://github.com/smallslowtank/tg-bot-yc-function-aiogram
 
 SourceCraft
 
+https://sourcecraft.dev/smallslowtank/tg-bot-yc-function-aiogram
 
 #### Видео
 
 YouTube
 
+https://www.youtube.com/watch?v=DzDXunnY6o8
 
