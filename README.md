@@ -82,6 +82,7 @@ https://yandex.cloud/ru/docs/functions/concepts/trigger/
 
 https://yandex.cloud/ru/training
 
+---
 
 #### Репозитории
 
@@ -91,7 +92,9 @@ https://github.com/smallslowtank/tg-bot-yc-function-aiogram
 
 SourceCraft
 
-https://sourcecraft.dev/smallslowtank/tg-bot-yc-function-aiogram
+https://sourcecraft.dev/small-slow-tank/tg-bot-yc-function-aiogram
+
+---
 
 #### Видео
 
@@ -99,3 +102,10 @@ YouTube
 
 https://www.youtube.com/watch?v=DzDXunnY6o8
 
+---
+
+#### Terraform
+
+Как развернуть этото бота с помощью Terraform
+
+https://github.com/smallslowtank/terraform-telegram-bot
