@@ -71,5 +71,10 @@ async def last_quote(user_id):
         async with ydb.aio.QuerySessionPool(driver) as pool:
             result = await callee(pool, user_id)
 
-        data = result[0].rows[0].quote_id
+        # Если нет пользователя в базе, то идентификатор 0
+        if not result[0].rows:
+            data = 0
+        else:
+            data = result[0].rows[0].quote_id
+
         return data
