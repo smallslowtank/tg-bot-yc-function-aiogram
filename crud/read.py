@@ -12,12 +12,14 @@ async def random_quote():
     async def callee(pool: ydb.aio.QuerySessionPool, quote_id):
         result = await pool.execute_with_retries(
             """
-            DECLARE $r AS Int64;
+            DECLARE $parameter1 AS Int64;
 
-            select author, quote from Quotes where quote_id=$r;
+            SELECT quote_id, author, quote
+            FROM Quotes
+            WHERE quote_id=$parameter1;
             """,
             {
-                "$r": quote_id
+                "$parameter1": quote_id
             },
         )
 
@@ -34,9 +36,10 @@ async def random_quote():
             result = await callee(pool, r)
 
         data = result[0].rows[0]
+        quote_id = data.quote_id
         quote = data.quote
         author = data.author
-        return quote, author
+        return quote_id, quote, author
 
 
 async def last_quote(user_id):
