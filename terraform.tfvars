@@ -1,0 +1,5 @@
+bot_token = "<бот-токен>"
+token     = "<OAuth-токен>"
+cloud_id  = "<идентификатор_облака>"
+folder_id = "<идентификатор_каталога>"
+zone      = "ru-central1-d"
