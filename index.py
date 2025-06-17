@@ -6,6 +6,7 @@ from aiogram.client.default import DefaultBotProperties
 
 from routers import router as main_router
 from core.config import settings
+from upload import check_quotes, upload_quotes
 
 bot = Bot(
     token=settings.BOT_TOKEN,
@@ -21,9 +22,13 @@ async def handler(event, context):
     Точка входа в функцию
     (index.handler)
     """
-    #request_body_dict = json.loads(event['body'])
+
+    # Загрузка цитат, если их нет в базе
+    check = await check_quotes()
+    if not check:
+        await upload_quotes()
+
+    # request_body_dict = json.loads(event['body'])
     request_body_dict = json.loads(event["messages"][0]["details"]["message"]["body"])
     await dp.feed_webhook_update(bot=bot, update=request_body_dict)
-    return {
-        'statusCode': 200
-    }
+    return {'statusCode': 200}
