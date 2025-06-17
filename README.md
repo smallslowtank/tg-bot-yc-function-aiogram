@@ -1,101 +1,56 @@
-### Телеграм-бот на webhook, aiogram и стеке serverless-сервисов Yandex Cloud
+### Отличия от версии в ветке master
 
-Зачем? Потомучто! )))
+1. Добавлена таблица Users для хранения в ней идентификатора последней цитаты.
+2. Реализована логика для исключения повторения подряд одной и той же цитаты.
+3. Цитаты в таблицу загружаются автоматически, если их там нет.
+4. Добавлены файлы для развёртывание бота через Terraform.
 
-Файл с баннером для загрузки в хранилище
+### Развёртывание бота через Terraform
 
-https://github.com/smallslowtank/tg-bot-yc-function-aiogram/blob/master/IMG.jpg
+Копировать файл с настройками .terraformrc в домашнюю папку.
 
-Файл с zip-ахривом кода телеграм-бота для загрузки в функцию
+Редактировать файл terraform.tfvars
 
-https://github.com/smallslowtank/tg-bot-yc-function-aiogram/blob/master/tg-bot.zip
+OAuth-токен в сервисе Яндекс ID, для получения нужно перейти по ссылке и от туда его скопировать.
+Ссылка https://oauth.yandex.ru/authorize?response_type=token&client_id=1a6990aa636648e9b2ef855fa7bec2fb
 
-Файл с текстом запросов в базу данных для создания таблицы и наполнения её информацией
-
-https://github.com/smallslowtank/tg-bot-yc-function-aiogram/blob/master/create-db.sql
-
-Файл с названиями переменных для функии
-
-https://github.com/smallslowtank/tg-bot-yc-function-aiogram/blob/master/env.example
-
-Файл с текста команды для подключения webhook
-
-https://github.com/smallslowtank/tg-bot-yc-function-aiogram/blob/master/set-webhook.txt 
-
-#### Документация
-
-Telegram API
-
-https://core.telegram.org/api
-
----
-
-Aiogram
-
-https://docs.aiogram.dev/en
-
----
-
-Yandex Cloud
-
-Уровень нетарифицируемого использования (free tier)
-
-https://yandex.cloud/ru/docs/billing/concepts/serverless-free-tier
-
-Начало работы для физических лиц
-
-https://yandex.cloud/ru/docs/getting-started/individuals/registration
-
-Про гранты
-
-https://yandex.cloud/ru/docs/billing/concepts/bonus-account
-
-Yandex Object Storage
-
-https://yandex.cloud/ru/docs/storage/
-
-Yandex Identity and Access Management
-
-https://yandex.cloud/ru/docs/iam/
-
-Yandex Managed Service for YDB
-
-https://yandex.cloud/ru/docs/ydb/
-
-Yandex Message Queue
-
-https://yandex.cloud/ru/docs/message-queue/
-
-Yandex API Gateway
-
-https://yandex.cloud/ru/docs/api-gateway/
-
-Yandex Cloud Functions
-
-https://yandex.cloud/ru/docs/functions/
-
-Триггеры в Cloud Functions
-
-https://yandex.cloud/ru/docs/functions/concepts/trigger/
-
-Обучение и сертификация
-
-https://yandex.cloud/ru/training
-
-
-#### Репозитории
-
-GitHub
-
-https://github.com/smallslowtank/tg-bot-yc-function-aiogram
-
-SourceCraft
-
-https://sourcecraft.dev/smallslowtank/tg-bot-yc-function-aiogram
-
-#### Видео
-
-YouTube
-
-https://www.youtube.com/watch?v=DzDXunnY6o8
-
+Команды для создания ресурсов:
+```
+terraform apply \
+    -target=yandex_iam_service_account.sa-editor \
+    -target=yandex_resourcemanager_folder_iam_binding.sa-editor \
+    -target=yandex_iam_service_account_static_access_key.sa-editor-static-key
+```
+```
+terraform apply \
+    -target=yandex_storage_bucket.tg-bot-bucket \
+    -target=yandex_ydb_database_serverless.tg-bot-ydb
+```
+```
+terraform apply \
+    -target=yandex_ydb_table.Quotes \
+    -target=yandex_ydb_table.Users \
+    -target=yandex_storage_object.tg-bot-banner
+```
+```
+terraform apply
+```
+### Подключить webhook:
+```
+curl \
+  --request POST \
+  --url https://api.telegram.org/bot<токен_бота>/setWebhook \
+  --header 'content-type: application/json' \
+  --data '{"url": "<домен_API-шлюза>/tg-bot"}'
+```
+### Удаление сервисов через Terraform
+```
+terraform destroy \
+    -target=yandex_storage_object.tg-bot-banner \
+    -target=yandex_message_queue.tg-bot-message-queue \
+    -target=yandex_ydb_table.Quotes \
+    -target=yandex_ydb_table.Users
+```
+```
+terraform destroy
+```
